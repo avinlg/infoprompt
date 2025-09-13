@@ -33,11 +33,14 @@ jobs:
           reprepro -b repo includedeb stable ../infoprompt_0.1.0_all.deb
 
       - name: Import GPG key and sign Release
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         run: |
           set -euo pipefail
+          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
+            echo "No GPG_PRIVATE_KEY provided; skipping signing"
+            exit 0
+          fi
           # Import private key
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           # Extract primary key ID (long keyid/fingerprint) from secret keys
