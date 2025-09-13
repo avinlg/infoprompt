@@ -30,7 +30,25 @@ jobs:
             'Components: main' \
             'SignWith: false' \
             > repo/conf/distributions
-          reprepro -b repo includedeb stable ../infoprompt_0.1.0_all.deb
+          # Put the .deb into the pool and generate Packages/Packages.gz and Release
+          mkdir -p repo/pool/main/i/infoprompt
+          cp ../infoprompt_0.1.0_all.deb repo/pool/main/i/infoprompt/
+          # Generate Packages file and gzip it
+          mkdir -p repo/dists/stable/main/binary-all
+          dpkg-scanpackages repo/pool /dev/null > repo/dists/stable/main/binary-all/Packages
+          gzip -9 -c repo/dists/stable/main/binary-all/Packages > repo/dists/stable/main/binary-all/Packages.gz
+          # Create Release file with checksum for the Packages.gz
+          printf '%s\n' \
+            'Origin: infoprompt' \
+            'Label: infoprompt' \
+            'Suite: stable' \
+            'Codename: stable' \
+            'Architectures: all' \
+            'Components: main' \
+            'Description: infoprompt apt repository' \
+            > repo/dists/stable/Release
+          sha256=$(sha256sum repo/dists/stable/main/binary-all/Packages.gz | cut -d' ' -f1)
+          printf 'SHA256: %s %s\n' "$sha256" "repo/dists/stable/main/binary-all/Packages.gz" >> repo/dists/stable/Release
 
       - name: Import GPG key and sign Release
         env:
