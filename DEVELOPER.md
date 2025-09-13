@@ -68,6 +68,23 @@ sudo apt install infoprompt
 - The uninstaller backs up `~/.bashrc` to `~/.bashrc.infoprompt.bak.<timestamp>` before removing sourcing lines.
 - Keep packaging changes small and test in a local VM/container before updating CI.
 
+### /etc/profile.d strategy
+
+The packaged `.deb` now installs a small wrapper at `/etc/profile.d/infoprompt.sh` which sources `/usr/share/infoprompt/bash-prompt.sh` for interactive/login shells. This is the recommended strategy because:
+
+- It avoids editing users' personal dotfiles (`~/.bashrc`).
+- Installing the package (`apt install infoprompt`) makes the prompt available to all users automatically for new shells.
+- Removing the package (`apt remove infoprompt`) removes the wrapper so the prompt stops being automatically sourced.
+
+If you need to migrate existing users who already used the local installer (and therefore have a `source ~/.bash_prompt` line in their `~/.bashrc`), you can either leave those lines (they are harmless) or provide optional guidance in `DEVELOPER.md` for a migration script. Note: I will not add maintainer scripts (`postinst`/`prerm`) unless you explicitly ask.
+
+### Installer / Uninstaller behavior
+
+- `install-bash-prompt.sh` (developer/local) **does** modify the invoking user's `~/.bashrc` by appending a small sourcing block. This is only intended for per-user development installs.
+- `uninstall-bash-prompt.sh` removes that sourcing block and backs up `~/.bashrc` before doing so.
+
+If you prefer to avoid any per-user modifications entirely, tell me and I can remove the `~/.bashrc` editing from the installer; the packaged `/etc/profile.d` wrapper is the recommended replacement.
+
 ## Contact / Contributing
 
 Open issues or PRs at https://github.com/avinlg/infoprompt.
