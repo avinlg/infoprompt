@@ -1,1 +1,5 @@
 infoprompt-private.asc
+
+# Local packaging/build artifacts
+infoprompt_*_pkg/
+packaging/infoprompt_*_all.deb

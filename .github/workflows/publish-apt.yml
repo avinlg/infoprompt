@@ -24,6 +24,14 @@ jobs:
           chmod +x pack.sh
           ./pack.sh
 
+      - name: Verify package contains /etc/profile.d wrapper
+        run: |
+          set -euo pipefail
+          # find the produced .deb
+          deb=$(ls packaging/infoprompt_*_all.deb | head -n1)
+          echo "Checking $deb for /etc/profile.d/infoprompt.sh"
+          dpkg-deb -c "$deb" | awk '{print $6}' | grep -q '^/etc/profile.d/infoprompt.sh$' || (dpkg-deb -c "$deb" && echo 'Wrapper not found in package' && exit 1)
+
       - name: Create repo and include package
         run: |
           mkdir -p repo/conf repo/pool
