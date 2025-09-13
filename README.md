@@ -43,20 +43,6 @@ fi
 
 The prompt is git-aware and shows virtual environment information, exit codes, branch/status, and emojis to help readability.
 
-## Development & Packaging
-
-- Package builder: `packaging/pack.sh` builds the `.deb` (places artifact in repository root and CI copies it into the APT repo during workflow).
-- CI publishes an APT repository to GitHub Pages at `https://avinlg.github.io/infoprompt/` and will sign releases if `GPG_PRIVATE_KEY` is configured in repository secrets.
-
-## Troubleshooting
-
-- If `apt-get update` fails to fetch the repository, confirm Pages is published and `infoprompt.gpg` is reachable.
-- To debug locally, download the `.deb` manually and inspect the contents with `dpkg-deb -c infoprompt_*.deb`.
-
----
-
-A modern, informative, and colorful Bash prompt for developers. Shows git status, Python venv, time, user, host, working directory, and more—all with emoji and color.
-
 ## Features
 - Git branch, status, and merge conflict detection
 - Python virtual environment name
@@ -64,43 +50,15 @@ A modern, informative, and colorful Bash prompt for developers. Shows git status
 - Time, user, host, working directory
 - Colorful and emoji-rich, designed for dark terminals
 
-## Developer / Local Install (optional)
-
-If you want to test the prompt from the repository (developer workflow):
-
-1. Clone the repository locally:
-   ```sh
-   git clone <repo-url> ~/projects/bashprompt
-   cd ~/projects/bashprompt
-   ```
-2. Run the local installer (this installs to your home directory):
-   ```sh
-   bash install-bash-prompt.sh
-   ```
-3. Open a new terminal or run:
-   ```sh
-   source ~/.bash_prompt
-   ```
-
 ## Uninstall
+Remove the local installer changes:
+
 ```sh
 bash uninstall-bash-prompt.sh
 ```
 
-## Prompt status fields
-The prompt shows concise git and workspace status fields. Their meanings:
+For developer and packaging details, see `DEVELOPER.md` in this repository.
 
-- `ut:<n>` : number of untracked files (not added to git)
-- `st:<n>` : number of staged (indexed) changes ready to commit
-- `m:<n>`  : number of modified (tracked) files with unstaged changes
-- `🟢` / `🔴`: repository clean or dirty (uncommitted changes)
-- `⚔️ MERGE CONFLICT`: shows when unmerged conflict markers exist
+---
 
-These are designed to be lightweight and computed with standard git commands so the prompt remains responsive.
-
-## Contributing
-- Open issues or pull requests on GitHub: https://github.com/avinlg/infoprompt
-- Please keep changes small and test in a local terminal.
-
-## License
-MIT (or specify your license)
+License: The project is licensed under MIT. See `LICENSE` for details.
