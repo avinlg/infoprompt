@@ -1,0 +1,14 @@
+Package: infoprompt
+Version: 0.1.0
+Architecture: all
+Maintainer: avi <avinashgowda.1994@gmail.com>
+Filename: repo/pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
+Size: 1652
+MD5sum: e1deebd9375f11de9377daad7f6e9135
+SHA1: 6ced62c3ae869e7e6ff53fb62a029561577bce8d
+SHA256: 705ac8aad574f54002cad903d1cd3809857456770dff41c3364c84f81ce4fcca
+Section: utils
+Priority: optional
+Description: infoprompt — informative bash prompt
+ A colorful, git-aware Bash prompt.
+

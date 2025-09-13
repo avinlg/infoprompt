@@ -1,0 +1,6 @@
+Origin: infoprompt
+Label: infoprompt
+Codename: stable
+Architectures: all
+Components: main
+SignWith: false

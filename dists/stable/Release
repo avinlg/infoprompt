@@ -1,0 +1,8 @@
+Origin: infoprompt
+Label: infoprompt
+Suite: stable
+Codename: stable
+Architectures: all
+Components: main
+Description: infoprompt apt repository
+SHA256: 7a747846ad5800fec5acbed9aa7893da462151cdfc8fea0855c4937c95671137 repo/dists/stable/main/binary-all/Packages.gz

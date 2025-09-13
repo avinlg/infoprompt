@@ -1,0 +1,18 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: infoprompt
+Label: infoprompt
+Suite: stable
+Codename: stable
+Architectures: all
+Components: main
+Description: infoprompt apt repository
+SHA256: 7a747846ad5800fec5acbed9aa7893da462151cdfc8fea0855c4937c95671137 repo/dists/stable/main/binary-all/Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQRBfxc/y7JYPMYczePIme6lmnOJzwUCaMU1jQAKCRDIme6lmnOJ
+zyjPAP0eVKiNFiVJm6mUtbqjL/hWPrBFTv/BzcR2YakcdbFecwD/VkHFOBZvZzHG
+OAXxFM+LKIWm1RGsnjPn5GygjV+4qwM=
+=V/mv
+-----END PGP SIGNATURE-----
