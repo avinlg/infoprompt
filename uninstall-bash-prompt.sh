@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Backup ~/.bashrc first
 bashrc="$HOME/.bashrc"
 backup="$HOME/.bashrc.infoprompt.bak.$(date +%s)"
 cp "$bashrc" "$backup"
@@ -13,4 +12,8 @@ awk '!/^[[:space:]]*(source|\.)[[:space:]]+(~\/|\$HOME\/)?\.bash_prompt/ { print
 # Remove the prompt file
 rm -f "$HOME/.bash_prompt"
 
-echo "infoprompt uninstalled. ~/.bashrc backed up to $backup. Restart your terminal to see the default prompt."
+if dpkg -s infoprompt >/dev/null 2>&1; then
+	echo "infoprompt files removed from your home directory, but the system package 'infoprompt' is still installed. To remove the packaged version: sudo apt remove infoprompt"
+else
+	echo "infoprompt uninstalled. ~/.bashrc backed up to $backup. Restart your terminal to see the default prompt."
+fi

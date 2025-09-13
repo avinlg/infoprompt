@@ -2,7 +2,8 @@
 set -euo pipefail
 
 srcdir="$(cd "$(dirname "$0")/.." && pwd)"
-version="${VERSION:-0.1.0}"
+# Derive version from latest git tag, fallback to 0.1.0
+version=$(git -C "$srcdir" describe --tags --abbrev=0 2>/dev/null || echo "0.1.0")
 pkgdir="$PWD/infoprompt_${version}_pkg"
 
 rm -rf "$pkgdir"
@@ -21,5 +22,6 @@ Description: infoprompt — informative bash prompt
  A colorful, git-aware Bash prompt.
 EOF
 
-dpkg-deb --build "$pkgdir" "infoprompt_${version}_all.deb"
-echo "Built infoprompt_${version}_all.deb"
+out="$(dirname "$0")/infoprompt_${version}_all.deb"
+dpkg-deb --build "$pkgdir" "$out"
+echo "Built $out"

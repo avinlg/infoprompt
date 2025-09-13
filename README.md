@@ -1,10 +1,10 @@
 # infoprompt
 
- A small, informative Bash prompt packaged as a .deb and served via GitHub Pages APT repository.
+ A small, informative Bash prompt package.
 
 ## Installation (recommended: via APT)
 
-- Add the repository signing key and repository:
+Add the repository signing key and repository, then install with `apt`:
 
 ```bash
 sudo curl -fsSL https://avinlg.github.io/infoprompt/infoprompt.gpg | gpg --dearmor -o /usr/share/keyrings/infoprompt-archive-keyring.gpg
@@ -13,17 +13,9 @@ sudo apt-get update
 sudo apt-get install infoprompt
 ```
 
-If you prefer not to use the signed key, you can add the repo without `signed-by` (less secure):
+## Manual / Local installation (optional, for development)
 
-```bash
-echo "deb https://avinlg.github.io/infoprompt stable main" | sudo tee /etc/apt/sources.list.d/infoprompt.list
-sudo apt-get update
-sudo apt-get install infoprompt
-```
-
-## Manual installation
-
-If you want to install the package without adding the APT repository, download the latest `.deb` and install with `dpkg`:
+If you are developing or testing locally you can install from the built `.deb`. This is intended for development — prefer the APT route for regular use.
 
 ```bash
 curl -LO https://raw.githubusercontent.com/avinlg/infoprompt/gh-pages/pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
@@ -62,7 +54,6 @@ The prompt is git-aware and shows virtual environment information, exit codes, b
 - To debug locally, download the `.deb` manually and inspect the contents with `dpkg-deb -c infoprompt_*.deb`.
 
 ---
-If you'd like, I can add a `USAGE.md` with more examples or update the package `Version` on each git tag.# infoprompt
 
 A modern, informative, and colorful Bash prompt for developers. Shows git status, Python venv, time, user, host, working directory, and more—all with emoji and color.
 
@@ -73,14 +64,16 @@ A modern, informative, and colorful Bash prompt for developers. Shows git status
 - Time, user, host, working directory
 - Colorful and emoji-rich, designed for dark terminals
 
-## Installation
+## Developer / Local Install (optional)
 
-1. Clone or copy this directory:
+If you want to test the prompt from the repository (developer workflow):
+
+1. Clone the repository locally:
    ```sh
    git clone <repo-url> ~/projects/bashprompt
    cd ~/projects/bashprompt
    ```
-2. Run the installer:
+2. Run the local installer (this installs to your home directory):
    ```sh
    bash install-bash-prompt.sh
    ```
@@ -105,43 +98,9 @@ The prompt shows concise git and workspace status fields. Their meanings:
 
 These are designed to be lightweight and computed with standard git commands so the prompt remains responsive.
 
-## Troubleshooting
-- If the prompt shows no git info, ensure `git` is installed and you're inside a git repository.
-- If colors look wrong, make sure your terminal supports ANSI colors (most modern terminals do).
-
 ## Contributing
 - Open issues or pull requests on GitHub: https://github.com/avinlg/infoprompt
 - Please keep changes small and test in a local terminal.
-
-## Can this be installed via apt?
-No, this is not an apt package. `apt` is for system-wide packages managed by your Linux distribution. To distribute via `apt`, you would need to package it as a `.deb` file, host it in a repository, and follow Debian/Ubuntu packaging guidelines. For most users, the provided install script is the simplest and safest way.
-
-### Publish to GitHub Pages
-This repo includes a sample GitHub Actions workflow that builds a simple `.deb` and publishes an apt repository to the `gh-pages` branch using `reprepro` and `actions-gh-pages`.
-
-Once the workflow runs and publishes, users can add the repo with (example):
-
-```bash
-curl -fsSL https://avinlg.github.io/infoprompt/infoprompt.gpg | sudo gpg --dearmor -o /usr/share/keyrings/infoprompt-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/infoprompt-archive-keyring.gpg] https://avinlg.github.io/infoprompt/ stable main" \
-   | sudo tee /etc/apt/sources.list.d/infoprompt.list
-sudo apt update
-sudo apt install infoprompt
-```
-
-Note: the sample workflow publishes unsigned repositories by default. To secure the repo, enable GPG signing and publish the public key (infoprompt.gpg) alongside the repo.
-
-### Enabling GPG-signed repositories (optional)
-1. Create a GPG key locally:
-
-```bash
-gpg --full-generate-key
-gpg --armor --export you@example.com > infoprompt.gpg
-```
-
-2. Add the private key to your repository secrets (Settings → Secrets → Actions) as `GPG_PRIVATE_KEY` (export with `gpg --export-secret-keys --armor YOUR_KEY_ID`).
-
-3. The workflow will import the private key and sign the repository, publishing `infoprompt.gpg` (public key) for users to import.
 
 ## License
 MIT (or specify your license)

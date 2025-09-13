@@ -5,6 +5,11 @@ set -euo pipefail
 srcdir="$(cd "$(dirname "$0")" && pwd)"
 target="$HOME/.bash_prompt"
 
+# If the package is installed system-wide prefer that and instruct the user
+if command -v apt >/dev/null 2>&1 && dpkg -s infoprompt >/dev/null 2>&1; then
+  echo "infoprompt appears to be installed via APT system-wide. To use the packaged prompt, ensure /usr/share/infoprompt/bash-prompt.sh is sourced from your shell initialization files (see README)."
+fi
+
 # Backup existing prompt file if present
 if [ -f "$target" ]; then
   backup="$HOME/.bash_prompt.bak.$(date +%s)"
@@ -28,4 +33,4 @@ else
   echo "$bashrc already sources .bash_prompt"
 fi
 
-echo "infoprompt installed! Open a new terminal or run: source ~/.bash_prompt"
+echo "infoprompt installed to $target. Open a new terminal or run: source ~/.bash_prompt"
