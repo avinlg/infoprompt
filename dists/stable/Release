@@ -5,4 +5,4 @@ Codename: stable
 Architectures: all
 Components: main
 Description: infoprompt apt repository
-SHA256: 037e1cdab9c724b99c9bd9f5cc1e9d1dc0082b1e85cc60a40af8dc770953a7dc repo/dists/stable/main/binary-all/Packages.gz
+SHA256: c9d9ab231f5232051255b7b2109d3f9d0c3c213cb953df406803c487d80e7296 repo/dists/stable/main/binary-all/Packages.gz
