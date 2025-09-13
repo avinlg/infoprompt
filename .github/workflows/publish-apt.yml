@@ -32,7 +32,8 @@ jobs:
             > repo/conf/distributions
           # Put the .deb into the pool and generate Packages/Packages.gz and Release
           mkdir -p repo/pool/main/i/infoprompt
-          cp ../infoprompt_0.1.0_all.deb repo/pool/main/i/infoprompt/
+          # copy the .deb produced by packaging/pack.sh into the pool
+          cp packaging/infoprompt_*_all.deb repo/pool/main/i/infoprompt/
           # Generate Packages file and gzip it
           mkdir -p repo/dists/stable/main/binary-all
           dpkg-scanpackages repo/pool /dev/null > repo/dists/stable/main/binary-all/Packages
