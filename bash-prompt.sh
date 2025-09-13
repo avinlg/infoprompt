@@ -8,8 +8,13 @@ venv_info() {
 
 # Function to get detailed Git information
 git_info() {
+  # Return if git is not available or not a repo
+  command -v git >/dev/null 2>&1 || return
   git rev-parse --is-inside-work-tree &>/dev/null || return
-  local branch commit status ahead behind ut new updated s conflict
+
+  local branch commit status ahead behind ut staged modified s conflict
+  s=""
+  conflict=""
   branch=$(git symbolic-ref --short HEAD 2>/dev/null)
   [ -z "$branch" ] && branch=$(git rev-parse --short HEAD 2>/dev/null)
   commit=$(git rev-parse --short HEAD 2>/dev/null)
@@ -17,15 +22,18 @@ git_info() {
   ahead=$(echo "$status" | grep '^#' | grep -o 'ahead [0-9]*' | grep -o '[0-9]*')
   behind=$(echo "$status" | grep '^#' | grep -o 'behind [0-9]*' | grep -o '[0-9]*')
   ut=$(echo "$status" | grep '^?' | wc -l | tr -d ' ')
-  new=$(git diff --name-only --diff-filter=A 2>/dev/null | wc -l | tr -d ' ')
-  updated=$(git diff --cached --numstat 2>/dev/null | wc -l | tr -d ' ')
+  # staged (cached) changes count
+  staged=$(git diff --name-only --cached 2>/dev/null | wc -l | tr -d ' ')
+  # modified but unstaged files
+  modified=$(git ls-files -m 2>/dev/null | wc -l | tr -d ' ')
   s=""
   [ "$ahead" != "" ] && s+="↑$ahead "
   [ "$behind" != "" ] && s+="↓$behind "
   [ "$ut" != "0" ] && s+="ut:$ut "
-  [ "$new" != "0" ] && s+="n:$new "
-  [ "$updated" != "0" ] && s+="u:$updated "
-  if git status --porcelain 2>/dev/null | grep -q '^UU '; then
+  [ "$staged" != "0" ] && s+="st:$staged "
+  [ "$modified" != "0" ] && s+="m:$modified "
+  # Detect merge conflicts reliably
+  if git ls-files -u 2>/dev/null | grep -q .; then
     conflict="⚔️ MERGE CONFLICT "
   fi
   git diff --quiet --ignore-submodules HEAD 2>/dev/null

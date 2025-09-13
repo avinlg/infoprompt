@@ -30,6 +30,25 @@ A modern, informative, and colorful Bash prompt for developers. Shows git status
 bash uninstall-bash-prompt.sh
 ```
 
+## Prompt status fields
+The prompt shows concise git and workspace status fields. Their meanings:
+
+- `ut:<n>` : number of untracked files (not added to git)
+- `st:<n>` : number of staged (indexed) changes ready to commit
+- `m:<n>`  : number of modified (tracked) files with unstaged changes
+- `🟢` / `🔴`: repository clean or dirty (uncommitted changes)
+- `⚔️ MERGE CONFLICT`: shows when unmerged conflict markers exist
+
+These are designed to be lightweight and computed with standard git commands so the prompt remains responsive.
+
+## Troubleshooting
+- If the prompt shows no git info, ensure `git` is installed and you're inside a git repository.
+- If colors look wrong, make sure your terminal supports ANSI colors (most modern terminals do).
+
+## Contributing
+- Open issues or pull requests on GitHub: https://github.com/avinlg/infoprompt
+- Please keep changes small and test in a local terminal.
+
 ## Can this be installed via apt?
 No, this is not an apt package. `apt` is for system-wide packages managed by your Linux distribution. To distribute via `apt`, you would need to package it as a `.deb` file, host it in a repository, and follow Debian/Ubuntu packaging guidelines. For most users, the provided install script is the simplest and safest way.
 
