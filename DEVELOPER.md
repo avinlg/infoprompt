@@ -80,8 +80,9 @@ If you need to migrate existing users who already used the local installer (and 
 
 ### Installer / Uninstaller behavior
 
-- `install-bash-prompt.sh` (developer/local) **does** modify the invoking user's `~/.bashrc` by appending a small sourcing block. This is only intended for per-user development installs.
-- `uninstall-bash-prompt.sh` removes that sourcing block and backs up `~/.bashrc` before doing so.
+
+- `install-bash-prompt.sh` (developer/local) copies `bash-prompt.sh` to `~/.bash_prompt` and no longer edits `~/.bashrc`. It prints instructions the user can opt-in to add to their `~/.bashrc`.
+- `uninstall-bash-prompt.sh` removes that sourcing block and backs up `~/.bashrc` before doing so (only relevant if the user added the sourcing block manually).
 
 If you prefer to avoid any per-user modifications entirely, tell me and I can remove the `~/.bashrc` editing from the installer; the packaged `/etc/profile.d` wrapper is the recommended replacement.
 
