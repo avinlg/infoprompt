@@ -1,5 +1,69 @@
 # infoprompt
 
+ A small, informative Bash prompt packaged as a .deb and served via GitHub Pages APT repository.
+
+## Installation (recommended: via APT)
+
+- Add the repository signing key and repository:
+
+```bash
+sudo curl -fsSL https://avinlg.github.io/infoprompt/infoprompt.gpg | gpg --dearmor -o /usr/share/keyrings/infoprompt-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/infoprompt-archive-keyring.gpg] https://avinlg.github.io/infoprompt stable main" | sudo tee /etc/apt/sources.list.d/infoprompt.list
+sudo apt-get update
+sudo apt-get install infoprompt
+```
+
+If you prefer not to use the signed key, you can add the repo without `signed-by` (less secure):
+
+```bash
+echo "deb https://avinlg.github.io/infoprompt stable main" | sudo tee /etc/apt/sources.list.d/infoprompt.list
+sudo apt-get update
+sudo apt-get install infoprompt
+```
+
+## Manual installation
+
+If you want to install the package without adding the APT repository, download the latest `.deb` and install with `dpkg`:
+
+```bash
+curl -LO https://raw.githubusercontent.com/avinlg/infoprompt/gh-pages/pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
+sudo dpkg -i infoprompt_0.1.0_all.deb
+sudo apt-get install -f   # fix dependencies if any
+```
+
+## Requirements
+
+- A Linux system with Bash (tested on Ubuntu/Debian).
+- `apt` / `dpkg` for package installation (for the APT route).
+- Optional: `gpg` to import the signing key when using the signed repo.
+
+## Where to use
+
+This package installs a small script that configures a Bash prompt (`bash-prompt.sh`) which you can source from your `~/.bashrc` or copy into system-wide locations like `/etc/profile.d/`.
+
+Example (per-user): add this to `~/.bashrc`:
+
+```bash
+if [ -f /usr/share/infoprompt/bash-prompt.sh ]; then
+  source /usr/share/infoprompt/bash-prompt.sh
+fi
+```
+
+The prompt is git-aware and shows virtual environment information, exit codes, branch/status, and emojis to help readability.
+
+## Development & Packaging
+
+- Package builder: `packaging/pack.sh` builds the `.deb` (places artifact in repository root and CI copies it into the APT repo during workflow).
+- CI publishes an APT repository to GitHub Pages at `https://avinlg.github.io/infoprompt/` and will sign releases if `GPG_PRIVATE_KEY` is configured in repository secrets.
+
+## Troubleshooting
+
+- If `apt-get update` fails to fetch the repository, confirm Pages is published and `infoprompt.gpg` is reachable.
+- To debug locally, download the `.deb` manually and inspect the contents with `dpkg-deb -c infoprompt_*.deb`.
+
+---
+If you'd like, I can add a `USAGE.md` with more examples or update the package `Version` on each git tag.# infoprompt
+
 A modern, informative, and colorful Bash prompt for developers. Shows git status, Python venv, time, user, host, working directory, and more—all with emoji and color.
 
 ## Features
