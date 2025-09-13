@@ -57,8 +57,8 @@ Remove the local installer changes:
 bash uninstall-bash-prompt.sh
 ```
 
-For developer and packaging details, see `DEVELOPER.md` in this repository.
+For developer and packaging details, see [`DEVELOPER.md`](./DEVELOPER.md) in this repository.
 
 ---
 
-License: The project is licensed under MIT. See `LICENSE` for details.
+License: The project is licensed under MIT. See [`LICENSE`](LICENSE) for details.
