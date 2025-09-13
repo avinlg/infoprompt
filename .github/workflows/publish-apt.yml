@@ -21,7 +21,7 @@ jobs:
 
       - name: Create repo and include package
         run: |
-          mkdir -p repo/conf repo/dists/stable/main/binary-all repo/pool
+          mkdir -p repo/conf repo/pool
           printf '%s\n' \
             'Origin: infoprompt' \
             'Label: infoprompt' \
