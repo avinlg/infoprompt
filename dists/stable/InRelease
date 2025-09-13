@@ -8,11 +8,11 @@ Codename: stable
 Architectures: all
 Components: main
 Description: infoprompt apt repository
-SHA256: c9d9ab231f5232051255b7b2109d3f9d0c3c213cb953df406803c487d80e7296 repo/dists/stable/main/binary-all/Packages.gz
+SHA256: 5977fd2a82899d1012f1c9af67b800404681d6bd4c86e5d6e09cb4deb3f4502d repo/dists/stable/main/binary-all/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQRBfxc/y7JYPMYczePIme6lmnOJzwUCaMVB7wAKCRDIme6lmnOJ
-z4ibAQCo9IPxIu9yO7MACL7657cTSSZ30leRE9T2XatUnF1TrQD/Z0Sg3pK2OWw4
-9fDVRN/GpVGGPC4qiJIYnD8MpRiI5w0=
-=odXh
+iHUEARYKAB0WIQRBfxc/y7JYPMYczePIme6lmnOJzwUCaMVCzgAKCRDIme6lmnOJ
+z9GyAP9xZ1earXP19pEo//9kGWDlpLmXWq2lVmQp7XT5u+9qRwEAmt/qjjbC73AL
++gSalwCGXEMItsAiJGeqyppLOD/ENQY=
+=PMBi
 -----END PGP SIGNATURE-----
