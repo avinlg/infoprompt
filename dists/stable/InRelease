@@ -8,11 +8,20 @@ Codename: stable
 Architectures: all
 Components: main
 Description: infoprompt apt repository
-SHA256: bc9bf23e2170f3511b5e3b01b70bd01fcbfb04ee9a3374a2aecef8185f80b841 repo/dists/stable/main/binary-all/Packages.gz
+SHA256: daaab0a46ebb9eec6f0a5d52521eecaf58c41d78cd733cf33fb5d38f2fd5d5c8 repo/dists/stable/main/binary-all/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQRBfxc/y7JYPMYczePIme6lmnOJzwUCaMaXlwAKCRDIme6lmnOJ
-zyvJAP9W/LbwmGw1Z8CZuAEw2/XG3GV4yOmuGjDYBZQXlTpkzwEA2lyLlYZIk1De
-bS4Gf0SYDa6g5+sriltBuxcVxC+CrA8=
-=ABkX
+iQIzBAEBCgAdFiEEnjE4Ju2RPacmEKaOPlg4+3pv0GoFAmjGsEIACgkQPlg4+3pv
+0Gp2ZRAAk8+nqAl/hA3xXGTWa4KlaEyu3DpB7MRF33LxLBCodPpEQtCrncxdA0Xy
+pkoogorbm981AR1w07ASNvqtGQgIkkMXpwqj2QeG8/9EHe8Gu0AWcwmFWGcCyyIC
+ohBOJFcV+iRIj6KFg2fJbDxz0yuEmFkTQ1hHVtLDxdtoftdCbvCoB3VupkzkeSfe
+/yQkKDPQRo6RmFIX3aHCT+0CGoe4LHU7KlwpGMJebeNPC9EJy09IPgEUWUVr1g2W
+6IwAhOx9sVcDweg4HPPNDi4unAtlYQ6AH7yYCWD6Ts/dTHOfKqqixezSO4SRoKNz
+kleuxP4hlbLNlpQYLSHyng4ySt3OHGzImKyGeDl32vWN4k0Kkdo9cWPtaoc4q5XF
+PFiu0YyqkqdsO42+Bkpo0Yh8xr3Zgc2gWMPy874QHyFJ7n2WrdRRo/oW2rtJNeGe
+Fq76rd17LGz8ZN2xyY9xbs5rAmDN9PlDHAbmFFtt9f18DTLkV4tVRV2tuieDdF4L
+DQEY18fHn6VGoTtGSMJzHkfn6Dt5XQHRbAazaeM5bkw8OhiOBleO2mH32MKM4X9Y
+ZhJm/gy+shSSCebaN/yzLvRufyxafFhYdCrMq2t+UULtyNAj0rADD8NQAjsE4Bfr
+I3tsG5Az3uNC9sb+xlNCni/uH5icFbBsaMpwUsEB7gWURXb4s98=
+=D+Ne
 -----END PGP SIGNATURE-----
