@@ -158,6 +158,11 @@ cat > "$pkgdir/DEBIAN/postinst" <<'EOF'
 set -e
 # Prefer SUDO_USER if available
 user=${SUDO_USER:-$(logname 2>/dev/null || echo root)}
+# If explicitly asked to assume yes via APT_ASSUME_YES=1, enable for the user without prompting
+if [ "${APT_ASSUME_YES:-0}" = "1" ]; then
+	/usr/bin/infoprompt -u "$user" enable || true
+	exit 0
+fi
 if [ "${DEBIAN_FRONTEND:-}" = "noninteractive" ]; then
 	exit 0
 fi
