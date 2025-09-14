@@ -181,9 +181,16 @@ fi
 echo
 printf "Enable infoprompt for user '%s'? [Y/n] (auto-yes in 10s) " "$user"
 ans=""
-if read -t 10 ans; then
-	:
-else
+# Trap SIGINT (Ctrl-C) and treat it as affirmative (assume yes)
+trap 'echo; echo "Interrupted, assuming yes."; ans=Y' INT
+# Disable errexit temporarily so a read error (due to signal/timeout) doesn't abort the script
+set +e
+read -r -t 10 ans
+rc=$?
+set -e
+# Clear trap
+trap - INT
+if [ $rc -ne 0 ] && [ -z "$ans" ]; then
 	echo
 	echo "No answer within 10s, assuming yes."
 	ans=Y
