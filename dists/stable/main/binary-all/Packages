@@ -5,9 +5,9 @@ Maintainer: avi <avinashgowda.1994@gmail.com>
 Depends: bash
 Filename: repo/pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
 Size: 2180
-MD5sum: c39d276073952d6fb696849c884c3872
-SHA1: 915a490711c084624bb841ac3de0eb97d1fb0565
-SHA256: 3dd3089537f7960ad2e14f3f766d10fafc48b1204975c1734d9f5a4552741bc5
+MD5sum: fc965db2cf2a334c10456a26e2e0c2f7
+SHA1: 930141559b4b11bcb0bb8a9545be7d822471660a
+SHA256: 780570f822ba259314240766d02b9973e4f66c31dd07778a83c3eea100260adf
 Section: utils
 Priority: optional
 Description: infoprompt — informative bash prompt
