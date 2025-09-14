@@ -57,8 +57,9 @@ jobs:
             'Label: infoprompt' \
             'Suite: stable' \
             'Codename: stable' \
-            'Architectures: all' \
+            'Architectures: amd64 all' \
             'Components: main' \
+            "Date: $(date -R)" \
             'Description: infoprompt apt repository' \
             > repo/dists/stable/Release
           # Add Checksums-Sha256 entries for Packages and Packages.gz
@@ -71,6 +72,14 @@ jobs:
               printf ' %s %s %s\n' "$sha256" "$size" "$base" >> repo/dists/stable/Release
             fi
           done
+          # Also publish the Packages file under binary-amd64 so apt (amd64) can find it
+          mkdir -p repo/dists/stable/main/binary-amd64
+          if [ -f repo/dists/stable/main/binary-all/Packages ]; then
+            cp repo/dists/stable/main/binary-all/Packages repo/dists/stable/main/binary-amd64/Packages
+          fi
+          if [ -f repo/dists/stable/main/binary-all/Packages.gz ]; then
+            cp repo/dists/stable/main/binary-all/Packages.gz repo/dists/stable/main/binary-amd64/Packages.gz
+          fi
 
       - name: Import GPG key and sign Release
         env:
