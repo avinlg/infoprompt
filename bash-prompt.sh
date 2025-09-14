@@ -52,8 +52,18 @@ git_info() {
 # Function to show last command exit status if nonzero
 exit_code_info() {
   local status=$?
+  # Treat Ctrl-C (SIGINT -> 130) as non-error for prompt display
+  if [ "$status" -eq 130 ]; then
+    return 0
+  fi
   if [ "$status" -ne 0 ]; then
-    echo -n "❌ $status Last command failed"
+    if [ "$status" -gt 128 ]; then
+      sig=$((status - 128))
+      signame=$(kill -l "$sig" 2>/dev/null || echo "SIGNAL-$sig")
+      echo -n "❌ Terminated by $signame ($status)"
+    else
+      echo -n "❌ $status Last command failed"
+    fi
   fi
 }
 
