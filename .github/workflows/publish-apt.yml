@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Debian packaging tools
-        run: sudo apt-get update && sudo apt-get install -y dpkg-dev reprepro gnupg
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev dpkg-sig gnupg
 
       - name: Build .deb
         run: |
@@ -51,7 +51,7 @@ jobs:
           mkdir -p repo/dists/stable/main/binary-all
           dpkg-scanpackages repo/pool /dev/null > repo/dists/stable/main/binary-all/Packages
           gzip -9 -c repo/dists/stable/main/binary-all/Packages > repo/dists/stable/main/binary-all/Packages.gz
-          # Create Release file with checksum for the Packages.gz
+          # Create Release file with proper Checksums-Sha256 entries
           printf '%s\n' \
             'Origin: infoprompt' \
             'Label: infoprompt' \
@@ -61,29 +61,36 @@ jobs:
             'Components: main' \
             'Description: infoprompt apt repository' \
             > repo/dists/stable/Release
-          sha256=$(sha256sum repo/dists/stable/main/binary-all/Packages.gz | cut -d' ' -f1)
-          printf 'SHA256: %s %s\n' "$sha256" "repo/dists/stable/main/binary-all/Packages.gz" >> repo/dists/stable/Release
+          # Add Checksums-Sha256 entries for Packages and Packages.gz
+          for f in repo/dists/stable/main/binary-all/Packages repo/dists/stable/main/binary-all/Packages.gz; do
+            if [ -f "$f" ]; then
+              sha256=$(sha256sum "$f" | cut -d' ' -f1)
+              size=$(stat -c%s "$f")
+              base=${f#repo/dists/stable/}
+              printf '%s %s %s\n' "$sha256" "$size" "$base" >> repo/dists/stable/Release
+            fi
+          done
 
       - name: Import GPG key and sign Release
         env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          APT_GPG_PRIVATE_KEY: ${{ secrets.APT_GPG_PRIVATE_KEY }}
         run: |
           set -euo pipefail
-          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
-            echo "No GPG_PRIVATE_KEY provided; skipping signing"
+          if [ -z "${APT_GPG_PRIVATE_KEY:-}" ]; then
+            echo "No APT_GPG_PRIVATE_KEY provided; skipping signing"
             exit 0
           fi
           # Import private key
-          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          echo "$APT_GPG_PRIVATE_KEY" | gpg --batch --import
           # Extract primary key ID (long keyid/fingerprint) from secret keys
           GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/ {print $5; exit}')
           echo "Using GPG key ID: $GPG_KEY_ID"
           # Export public key for users
           gpg --armor --export "$GPG_KEY_ID" > repo/infoprompt.gpg
-          # Create signed InRelease (clear-signed) and detached Release.gpg (if Release exists)
+          # Create signed InRelease (clear-signed) and detached Release.gpg (fail on error)
           if [ -f repo/dists/stable/Release ]; then
-            gpg --batch --yes --default-key "$GPG_KEY_ID" --clearsign -o repo/dists/stable/InRelease repo/dists/stable/Release || true
-            gpg --batch --yes --default-key "$GPG_KEY_ID" --detach-sign -a -o repo/dists/stable/Release.gpg repo/dists/stable/Release || true
+            gpg --batch --yes --digest-algo SHA256 --default-key "$GPG_KEY_ID" --clearsign -o repo/dists/stable/InRelease repo/dists/stable/Release
+            gpg --batch --yes --digest-algo SHA256 --default-key "$GPG_KEY_ID" --detach-sign -a -o repo/dists/stable/Release.gpg repo/dists/stable/Release
           fi
 
       - name: Publish to GitHub Pages
