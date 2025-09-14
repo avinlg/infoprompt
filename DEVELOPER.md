@@ -90,4 +90,4 @@ If you prefer to avoid any per-user modifications entirely, tell me and I can re
 
 Open issues or PRs at https://github.com/avinlg/infoprompt.
 
-License: `LICENSE`
+License: [`LICENSE`](LICENSE)
