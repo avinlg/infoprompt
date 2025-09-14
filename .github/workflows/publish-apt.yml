@@ -49,7 +49,7 @@ jobs:
           cp packaging/infoprompt_*_all.deb repo/pool/main/i/infoprompt/
           # Generate Packages file and gzip it
           mkdir -p repo/dists/stable/main/binary-all
-          dpkg-scanpackages repo/pool /dev/null > repo/dists/stable/main/binary-all/Packages
+          (cd repo && dpkg-scanpackages pool /dev/null) > repo/dists/stable/main/binary-all/Packages
           gzip -9 -c repo/dists/stable/main/binary-all/Packages > repo/dists/stable/main/binary-all/Packages.gz
           # Create Release file with proper Checksums-Sha256 entries
           printf '%s\n' \
