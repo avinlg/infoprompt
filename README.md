@@ -2,6 +2,21 @@
 
  A small, informative Bash prompt package.
 
+ The prompt is git-aware and shows virtual environment information, exit codes, branch/status, and emojis to help readability.
+
+## Features
+- Git branch, status, and merge conflict detection
+- Python virtual environment name
+- Last command exit code (if nonzero)
+- Time, user, host, working directory
+- Colorful and emoji-rich, designed for dark terminals
+
+## Requirements
+
+- A Linux system with Bash (tested on Ubuntu/Debian).
+- `apt` / `dpkg` for package installation (for the APT route).
+- Optional: `gpg` to import the signing key when using the signed repo.
+
 ## Installation (recommended: via APT)
 
 Add the repository signing key and repository, then install with `apt`:
@@ -18,48 +33,9 @@ sudo apt-get update
 sudo apt-get install infoprompt
 ```
 
-## Manual / Local installation (optional, for development)
-
-If you are developing or testing locally you can install from the built `.deb`. This is intended for development — prefer the APT route for regular use.
-
-```bash
-curl -LO https://raw.githubusercontent.com/avinlg/infoprompt/gh-pages/pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
-sudo dpkg -i infoprompt_0.1.0_all.deb
-sudo apt-get install -f   # fix dependencies if any
-```
-
-## Requirements
-
-- A Linux system with Bash (tested on Ubuntu/Debian).
-- `apt` / `dpkg` for package installation (for the APT route).
-- Optional: `gpg` to import the signing key when using the signed repo.
-
-## Where to use
-
-This package installs a small script that configures a Bash prompt (`bash-prompt.sh`) which you can source from your `~/.bashrc` or copy into system-wide locations like `/etc/profile.d/`.
-
-Example (per-user): add this to `~/.bashrc`:
-
-```bash
-if [ -f /usr/share/infoprompt/bash-prompt.sh ]; then
-  source /usr/share/infoprompt/bash-prompt.sh
-fi
-```
-
-The prompt is git-aware and shows virtual environment information, exit codes, branch/status, and emojis to help readability.
-
-## Features
-- Git branch, status, and merge conflict detection
-- Python virtual environment name
-- Last command exit code (if nonzero)
-- Time, user, host, working directory
-- Colorful and emoji-rich, designed for dark terminals
-
 ## Uninstall
-Remove the local installer changes:
-
 ```sh
-bash uninstall-bash-prompt.sh
+sudo apt-get remove infoprompt
 ```
 
 For developer and packaging details, see [`DEVELOPER.md`](./DEVELOPER.md) in this repository.
@@ -67,3 +43,39 @@ For developer and packaging details, see [`DEVELOPER.md`](./DEVELOPER.md) in thi
 ---
 
 License: The project is licensed under MIT. See [`LICENSE`](LICENSE) for details.
+
+## Command Usage
+
+The package installs a small management CLI at `/usr/bin/infoprompt` to enable, disable, and check status for users.
+
+Usage:
+
+```sh
+infoprompt [options] <command>
+
+Commands:
+  status        Show whether the prompt is enabled for a user
+  enable        Enable infoprompt for a user (append to ~/.bashrc)
+  disable       Disable infoprompt for a user (remove from ~/.bashrc)
+
+Options:
+  -u USER       Target user (default: current user or the original sudo user)
+  -y            Assume yes (non-interactive)
+  -h            Show help
+```
+
+Examples:
+
+```sh
+# Enable for the current user interactively
+infoprompt enable
+
+# Enable for a specific user non-interactively
+infoprompt -u alice -y enable
+
+# Check status for the installing user (when run under sudo this checks SUDO_USER)
+infoprompt status
+
+# Disable for a user
+infoprompt -u alice disable
+```
