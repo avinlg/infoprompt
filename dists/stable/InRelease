@@ -1,5 +1,5 @@
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA256
 
 Origin: infoprompt
 Label: infoprompt
@@ -8,20 +8,21 @@ Codename: stable
 Architectures: all
 Components: main
 Description: infoprompt apt repository
-SHA256: bde31d21e0f231f88eef060fafef101190bddc4be01308379458ca6bcd9e006b repo/dists/stable/main/binary-all/Packages.gz
+b268d7d6aee7e24670095bfc928f4657253215922a5851ae93f4b45d2b9cc09d 471 main/binary-all/Packages
+e2c87b7a53e48c6ff82c0cd1e9508eb526f5960a68dbf4765bcddec00b1d4984 363 main/binary-all/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEnjE4Ju2RPacmEKaOPlg4+3pv0GoFAmjGsaQACgkQPlg4+3pv
-0Gpd4A/+NEyOyljmFHSdDl+CqTPgpgKNfCGhciiiPl3s1wpEaPSpriiYxDVU+oS3
-Lxl/2+qMnTpKFOJrrvg7tfY56t75UJ/HQg4EXoqbvBEP8yiku75PvkkuS/GvlqDG
-N7tMuSZ6hEPT9HkAz4aloWXmZVmGrYB4tVr6UJZRzjJ3sqkcS1qrDSxW8WG1uwYm
-giG0th20jX4OaO5ngYQKVdNlYSpYM+sx87r4B3Xgh2lPIxhQvF0CjguQaBknEfVP
-If3FVuHIKbLhieIUiRaos/t/vws5a5uckKcYcJOLLPdShVOe7nlslF61QjRTI+J9
-ccTfr1REg/mynYOs+uwmjLti1mMOml+y6oRHK15IXGTFCFo8RKh41RS1h+qGdNmY
-DbdqHztx2wqYCuoDK/lGgsf1j4HMNULYHp/PL/lc+et0mItmsnAB/T0fQBbumuEr
-G/BuNkWN4hOvga8ZUWJwqvIPIi1WECOkQXz0uYAlspHGRgSrdJgUuF1lIJiu41K9
-xmuhQLMj5veogRKwflMh+j/23DB6FBvwSnYsitr8iydzYbENKE4H0d+bjz43wb5A
-YBierLKtXwb87cBg87uSiZfMErYS8/xeE+/oLxRreQ9W1jJ9UclPikcdnug7SlB6
-OZYiJZu4Nst7MNLSBO1CiUjFD3erG1vPlYAmEmFrNM5F1blpXqE=
-=VVkq
+iQIzBAEBCAAdFiEEnjE4Ju2RPacmEKaOPlg4+3pv0GoFAmjGt9UACgkQPlg4+3pv
+0Gq6Fw/9EpFHnnvFb7C9w8U9GCi8lvdphj4uBgQDPexMoq87bcAYntF60iJRNWiQ
+BZpswyKJWrxWHk/VHCsyYYVUHYREjs7peO571BZF1VfnBlgETzIQVal0lOXW353O
+/iqiXuX2aspOvfv7FkVlH5XlwqdnoUVp9xrV+X/16AQPCZPcZ/faKSFQXmyGd523
+moGkoJltXOHYc+kZsVyNGgrcu3euProMY5bTwRb6ABd8eyKWqvhMVrfF420xLdHC
+DrxNsEygv1DIk1I3LA/UJWwNbj7hfhd7/I1GWAz1aeuYjLtdYUdefb/zQI0qHP+G
+ssx5SxpYjGUqIRfQvHR/XxwO5htsZ1SnztF9rOe5tYcNfBsclyiPtCM469UB6Lap
+hDpjVxlZ2Zzz4qxzCTUGMa1KcEOOvBCdb/rD2ZtUJJoF1pA3+/8CldvFWGsfyaM8
+CT0CMTHtWYh4Hdpk+NHkzKsw30aSoUUVeuZ4amTojbplW2HwjjVC+ywU6VB/Wc7w
+UujKzAVpFlBgzqxdzVNhsgnyw9+MBPaOJJLPyHn7qqqRN2wd5cUEi58pxIbGyEDs
+DXRRksKrWMWsu/tUNuIvGUgqpsouASQ5MMAGxNt25Wdj2SudT1c0hseQzyypWOS5
+REUw9wtSzh01ELTfsVEMdrEfc1AyRUdpTqp/XKQTNdyMA8PJORI=
+=7s8n
 -----END PGP SIGNATURE-----
