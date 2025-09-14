@@ -3,7 +3,11 @@ set -euo pipefail
 
 srcdir="$(cd "$(dirname "$0")/.." && pwd)"
 # Derive version from environment override, latest git tag, or fallback to 0.1.0
-version=${APT_PACKAGE_VERSION:-$(git -C "$srcdir" describe --tags --abbrev=0 2>/dev/null || echo "0.1.0")}
+# Allow overriding via environment; otherwise read project VERSION file if present
+if [ -z "${APT_PACKAGE_VERSION:-}" ] && [ -f "$srcdir/VERSION" ]; then
+	APT_PACKAGE_VERSION="$(tr -d '[:space:]' < "$srcdir/VERSION")"
+fi
+version=${APT_PACKAGE_VERSION:-$(git -C "$srcdir" describe --tags --abbrev=0 2>/dev/null || echo "0.1.1")}
 pkgdir="$PWD/infoprompt_${version}_pkg"
 
 rm -rf "$pkgdir"
