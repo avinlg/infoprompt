@@ -59,8 +59,6 @@ EOF
 gzip -9nf "$pkgdir/usr/share/doc/infoprompt/changelog.Debian"
 rm -f "$pkgdir/usr/share/doc/infoprompt/changelog.Debian"
 
-# Set all files to root:root
-chown -R root:root "$pkgdir"
 
 out="$(dirname "$0")/infoprompt_${version}_all.deb"
 dpkg-deb --build "$pkgdir" "$out"
