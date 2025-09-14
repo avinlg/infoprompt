@@ -6,3 +6,6 @@ packaging/infoprompt_*_all.deb
 
 # Temporary package build control files
 DEBIAN/
+
+# Local copy of files published by CI
+repo/

@@ -103,6 +103,23 @@ jobs:
             gpg --batch --yes --digest-algo SHA256 --default-key "$GPG_KEY_ID" --detach-sign -a -o repo/dists/stable/Release.gpg repo/dists/stable/Release
           fi
 
+      - name: Prepare Jekyll site files for Pages
+        run: |
+          set -euo pipefail
+          mkdir -p repo
+          # Create _config.yml to let Pages treat this as a simple site
+          cat > repo/_config.yml <<'YML'
+          title: infoprompt
+          paginate: 0
+          YML
+          # If README.md exists, use it as index.md so Jekyll renders it
+          if [ -f README.md ]; then
+            printf '---\nlayout: default\n---\n\n' > repo/index.md
+            cat README.md >> repo/index.md
+          else
+            printf '# infoprompt\n\nAPT repository.' > repo/index.md
+          fi
+
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
