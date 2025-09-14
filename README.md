@@ -7,8 +7,8 @@
 Add the repository signing key and repository, then install with `apt`:
 
 ```bash
-sudo curl -fsSL https://avinlg.github.io/infoprompt/infoprompt.gpg | gpg --dearmor -o /usr/share/keyrings/infoprompt-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/infoprompt-archive-keyring.gpg] https://avinlg.github.io/infoprompt stable main" | sudo tee /etc/apt/sources.list.d/infoprompt.list
+curl -fsSL https://avinlg.github.io/infoprompt/infoprompt.gpg | sudo gpg --dearmor -o /usr/share/keyrings/infoprompt-archive-keyring.gpg
+grep -qxF 'deb [signed-by=/usr/share/keyrings/infoprompt-archive-keyring.gpg] https://avinlg.github.io/infoprompt stable main' /etc/apt/sources.list.d/infoprompt.list || echo 'deb [signed-by=/usr/share/keyrings/infoprompt-archive-keyring.gpg] https://avinlg.github.io/infoprompt stable main' | sudo tee -a /etc/apt/sources.list.d/infoprompt.list
 sudo apt-get update
 sudo apt-get install infoprompt
 ```
