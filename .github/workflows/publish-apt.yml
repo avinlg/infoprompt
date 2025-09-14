@@ -103,22 +103,24 @@ jobs:
             gpg --batch --yes --digest-algo SHA256 --default-key "$GPG_KEY_ID" --detach-sign -a -o repo/dists/stable/Release.gpg repo/dists/stable/Release
           fi
 
-      - name: Prepare Jekyll site files for Pages
+      - name: Prepare Pages content (render README to HTML)
         run: |
           set -euo pipefail
           mkdir -p repo
-          # Create _config.yml to let Pages treat this as a simple site
+          # Create minimal _config.yml (Jekyll will ignore if not needed)
           cat > repo/_config.yml <<'YML'
-          title: infoprompt
-          paginate: 0
-          YML
-          # If README.md exists, use it as index.md so Jekyll renders it
+title: infoprompt
+paginate: 0
+YML
+          # Install pandoc to render README.md -> index.html for prettier output
+          sudo apt-get update && sudo apt-get install -y pandoc
           if [ -f README.md ]; then
-            # Write frontmatter safely by using base64 to avoid '---' in the workflow YAML
-            echo 'LS0tCnJvdXRlOiBkZWZhdWx0CgotLS0K' | base64 --decode > repo/index.md
-            cat README.md >> repo/index.md
+            pandoc --from=gfm --to=html5 --standalone README.md -o repo/index.html
           else
-            echo 'IyBpbmZvcHJvbXB0CgpB UUUgcmVwb3NpdG9yeS4K' | base64 --decode > repo/index.md
+            cat > repo/index.html <<'HTML'
+<!doctype html>
+<html><head><meta charset="utf-8"><title>infoprompt</title></head><body><h1>infoprompt</h1><p>APT repository</p></body></html>
+HTML
           fi
 
       - name: Publish to GitHub Pages
