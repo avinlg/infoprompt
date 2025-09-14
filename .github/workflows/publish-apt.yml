@@ -62,12 +62,13 @@ jobs:
             'Description: infoprompt apt repository' \
             > repo/dists/stable/Release
           # Add Checksums-Sha256 entries for Packages and Packages.gz
+          printf 'SHA256:\n' >> repo/dists/stable/Release
           for f in repo/dists/stable/main/binary-all/Packages repo/dists/stable/main/binary-all/Packages.gz; do
             if [ -f "$f" ]; then
               sha256=$(sha256sum "$f" | cut -d' ' -f1)
               size=$(stat -c%s "$f")
               base=${f#repo/dists/stable/}
-              printf '%s %s %s\n' "$sha256" "$size" "$base" >> repo/dists/stable/Release
+              printf ' %s %s %s\n' "$sha256" "$size" "$base" >> repo/dists/stable/Release
             fi
           done
 
