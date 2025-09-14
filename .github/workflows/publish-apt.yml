@@ -108,19 +108,13 @@ jobs:
           set -euo pipefail
           mkdir -p repo
           # Create minimal _config.yml (Jekyll will ignore if not needed)
-          cat > repo/_config.yml <<'YML'
-          title: infoprompt
-          paginate: 0
-          YML
+          printf '%s\n' 'title: infoprompt' 'paginate: 0' > repo/_config.yml
           # Install pandoc to render README.md -> index.html for prettier output
           sudo apt-get update && sudo apt-get install -y pandoc
           if [ -f README.md ]; then
             pandoc --from=gfm --to=html5 --standalone README.md -o repo/index.html
           else
-            cat > repo/index.html <<'HTML'
-            <!doctype html>
-            <html><head><meta charset="utf-8"><title>infoprompt</title></head><body><h1>infoprompt</h1><p>APT repository</p></body></html>
-            HTML
+            printf '%s\n' '<!doctype html>' '<html><head><meta charset="utf-8"><title>infoprompt</title></head><body><h1>infoprompt</h1><p>APT repository</p></body></html>' > repo/index.html
           fi
 
       - name: Publish to GitHub Pages
