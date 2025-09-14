@@ -32,7 +32,20 @@ USAGE
 }
 
 target_user=""
-while getopts ":u:h" opt; do
+assume_yes=0
+while getopts ":u:hy-:" opt; do
+	case "$opt" in
+		u) target_user="$OPTARG" ;;
+		h) usage; exit 0 ;;
+		y) assume_yes=1 ;;
+		-)
+			case "$OPTARG" in
+				yes) assume_yes=1 ;;
+				*) usage; exit 2 ;;
+			esac ;;
+		*) usage; exit 2 ;;
+	esac
+done
 	case "$opt" in
 		u) target_user="$OPTARG" ;;
 		h) usage; exit 0 ;;
@@ -68,8 +81,9 @@ enable() {
 	fi
 	# Add idempotent block
 	if ! sudo grep -qxF "$snippet" "$bashrc" 2>/dev/null; then
-		sudo bash -c "printf '\n$snippet_start\n$snippet\n' >> \"$bashrc\"" || true
-		echo "infoprompt enabled for $target_user"
+			sudo bash -c "printf '\n$snippet_start\n$snippet\n' >> \"$bashrc\"" || true
+			echo "infoprompt enabled for $target_user"
+			logger -t infoprompt "enabled for $target_user"
 	else
 		echo "infoprompt already enabled for $target_user"
 	fi
@@ -80,8 +94,9 @@ disable() {
 		sudo sed -i '/^# Load infoprompt$/,+1d' "$bashrc" || true
 		sudo sed -i '/if \[ -f \/usr\/share\/infoprompt\/bash-prompt.sh \]; then source \/usr\/share\/infoprompt\/bash-prompt.sh; fi/d' "$bashrc" || true
 		echo "infoprompt disabled for $target_user"
-	else
-		echo "No ~/.bashrc for $target_user" >&2
+		else
+			echo "No ~/.bashrc for $target_user" >&2
+			logger -t infoprompt "disable: no .bashrc for $target_user"
 	fi
 }
 
@@ -89,8 +104,9 @@ status() {
 	if [ -f "$bashrc" ] && sudo grep -qxF "$snippet" "$bashrc" 2>/dev/null; then
 		echo "enabled for $target_user"
 		return 0
-	else
-		echo "disabled for $target_user"
+		else
+			echo "disabled for $target_user"
+			logger -t infoprompt "status: disabled for $target_user"
 		return 1
 	fi
 }
@@ -158,12 +174,13 @@ cat > "$pkgdir/DEBIAN/postinst" <<'EOF'
 set -e
 # Prefer SUDO_USER if available
 user=${SUDO_USER:-$(logname 2>/dev/null || echo root)}
-# If explicitly asked to assume yes via APT_ASSUME_YES=1, enable for the user without prompting
-if [ "${APT_ASSUME_YES:-0}" = "1" ]; then
-	/usr/bin/infoprompt -u "$user" enable || true
+# If DEBIAN_FRONTEND=noninteractive, skip prompting and do nothing
+if [ "${DEBIAN_FRONTEND:-}" = "noninteractive" ]; then
 	exit 0
 fi
-if [ "${DEBIAN_FRONTEND:-}" = "noninteractive" ]; then
+if [ "${ASSUME_YES:-0}" = "1" ]; then
+	/usr/bin/infoprompt -u "$user" -y enable || true
+	logger -t infoprompt "postinst: auto-enabled for $user"
 	exit 0
 fi
 echo
@@ -188,6 +205,7 @@ case "$1" in
 			if [ -f "$rc" ]; then
 				sed -i '/^# Load infoprompt$/,+1d' "$rc" || true
 				sed -i '/if \[ -f \/usr\/share\/infoprompt\/bash-prompt.sh \]; then source \/usr\/share\/infoprompt\/bash-prompt.sh; fi/d' "$rc" || true
+				logger -t infoprompt "postrm: removed snippet from $rc"
 			fi
 		done
 	;;
