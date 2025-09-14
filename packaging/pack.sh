@@ -31,28 +31,18 @@ Commands:
 
 Options:
 	-u USER       Target user (default: current user)
+	-y            Assume yes (non-interactive)
 	-h            Show this help
 USAGE
 }
 
 target_user=""
 assume_yes=0
-while getopts ":u:hy-:" opt; do
+while getopts "u:hy" opt; do
 	case "$opt" in
 		u) target_user="$OPTARG" ;;
 		h) usage; exit 0 ;;
 		y) assume_yes=1 ;;
-		-)
-			case "$OPTARG" in
-				yes) assume_yes=1 ;;
-				*) usage; exit 2 ;;
-			esac ;;
-		*) usage; exit 2 ;;
-	esac
-done
-	case "$opt" in
-		u) target_user="$OPTARG" ;;
-		h) usage; exit 0 ;;
 		*) usage; exit 2 ;;
 	esac
 done
@@ -85,9 +75,10 @@ enable() {
 	fi
 	# Add idempotent block
 	if ! sudo grep -qxF "$snippet" "$bashrc" 2>/dev/null; then
-			sudo bash -c "printf '\n$snippet_start\n$snippet\n' >> \"$bashrc\"" || true
-			echo "infoprompt enabled for $target_user"
-			logger -t infoprompt "enabled for $target_user"
+		# append as the target user to keep ownership sane
+		sudo -u "$target_user" sh -c "printf '\n$snippet_start\n$snippet\n' >> \"$bashrc\"" || true
+		echo "infoprompt enabled for $target_user"
+		logger -t infoprompt "enabled for $target_user"
 	else
 		echo "infoprompt already enabled for $target_user"
 	fi
@@ -98,9 +89,9 @@ disable() {
 		sudo sed -i '/^# Load infoprompt$/,+1d' "$bashrc" || true
 		sudo sed -i '/if \[ -f \/usr\/share\/infoprompt\/bash-prompt.sh \]; then source \/usr\/share\/infoprompt\/bash-prompt.sh; fi/d' "$bashrc" || true
 		echo "infoprompt disabled for $target_user"
-		else
-			echo "No ~/.bashrc for $target_user" >&2
-			logger -t infoprompt "disable: no .bashrc for $target_user"
+	else
+		echo "No ~/.bashrc for $target_user" >&2
+		logger -t infoprompt "disable: no .bashrc for $target_user"
 	fi
 }
 
@@ -108,9 +99,9 @@ status() {
 	if [ -f "$bashrc" ] && sudo grep -qxF "$snippet" "$bashrc" 2>/dev/null; then
 		echo "enabled for $target_user"
 		return 0
-		else
-			echo "disabled for $target_user"
-			logger -t infoprompt "status: disabled for $target_user"
+	else
+		echo "disabled for $target_user"
+		logger -t infoprompt "status: disabled for $target_user"
 		return 1
 	fi
 }
