@@ -4,8 +4,8 @@ Suite: stable
 Codename: stable
 Architectures: amd64 all
 Components: main
-Date: Sun, 14 Sep 2025 12:58:33 +0000
+Date: Sun, 14 Sep 2025 14:02:36 +0000
 Description: infoprompt apt repository
 SHA256:
- bee55dc3e60fc19c827fbfbec076dd4ad8d0da95987a9daa96dcc52100fc47b8 466 main/binary-all/Packages
- c6a540e832725a97ab1397106d4779e74a3f38946e0a2b7056266b023196e3f0 360 main/binary-all/Packages.gz
+ 0900984ea70295f6b8cecc3983bfcf6327b69c3f74da0aa8056b1192ddb8b2cc 466 main/binary-all/Packages
+ 57e677dc401e90c492473a6624aaf443f5ea45218e1cfce3c7e9fe0925a496b7 361 main/binary-all/Packages.gz

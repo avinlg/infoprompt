@@ -4,10 +4,10 @@ Architecture: all
 Maintainer: avi <avinashgowda.1994@gmail.com>
 Depends: bash
 Filename: pool/main/i/infoprompt/infoprompt_0.1.0_all.deb
-Size: 2178
-MD5sum: 1a810ad8ce7bef84797c7396d7789b62
-SHA1: 66e86dbab17fbba1ccf9ae400e0eb5467a3af23e
-SHA256: 79483143f0dd961f7c5c60ec274ad665b33ae41c48de8027f8510ee41e4028d8
+Size: 3464
+MD5sum: 4d73647e79f251682bf4a6c2804d85de
+SHA1: 5f6f50bc8fada8127110f0062d1dc7f2248b6ea3
+SHA256: 47e9b80f94ec6985470a4d012b4b10d6c26d077533067e6ac721ee7afde53d92
 Section: utils
 Priority: optional
 Description: infoprompt — informative bash prompt
