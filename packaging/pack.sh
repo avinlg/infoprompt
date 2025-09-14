@@ -186,14 +186,21 @@ echo
 printf "Enable infoprompt for user '%s'? [Y/n] (auto-yes in 10s) " "$user"
 ans=""
 # Trap SIGINT (Ctrl-C) and treat it as affirmative (assume yes)
-trap 'echo; echo "Interrupted, assuming yes."; ans=Y' INT
-# Disable errexit temporarily so a read error (due to signal/timeout) doesn't abort the script
+trap 'echo; echo "Interrupted, assuming yes."; ans=Y; kill "$TIMER_PID" 2>/dev/null || true' INT
+# Portable timeout for /bin/sh: start a background sleep that kills the read after 10s
+# Use a subshell to run the sleep so we can record its PID
+( sleep 10 && kill -s ALRM $$ ) &
+TIMER_PID=$!
+# Use a small wrapper to perform a blocking read; POSIX read doesn't support -t on dash
+# We rely on the ALRM signal to interrupt the read after the sleep expires
 set +e
-read -r -t 10 ans
+trap 'echo; echo "Interrupted, assuming yes."; ans=Y; kill "$TIMER_PID" 2>/dev/null || true' ALRM
+read ans 2>/dev/null
 rc=$?
 set -e
-# Clear trap
-trap - INT
+# Clear traps and ensure timer is killed
+trap - INT ALRM
+kill "$TIMER_PID" 2>/dev/null || true
 if [ $rc -ne 0 ] && [ -z "$ans" ]; then
 	echo
 	echo "No answer within 10s, assuming yes."
