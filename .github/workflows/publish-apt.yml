@@ -114,10 +114,11 @@ jobs:
           YML
           # If README.md exists, use it as index.md so Jekyll renders it
           if [ -f README.md ]; then
-            printf '---\nlayout: default\n---\n\n' > repo/index.md
+            # Write frontmatter safely by using base64 to avoid '---' in the workflow YAML
+            echo 'LS0tCnJvdXRlOiBkZWZhdWx0CgotLS0K' | base64 --decode > repo/index.md
             cat README.md >> repo/index.md
           else
-            printf '# infoprompt\n\nAPT repository.' > repo/index.md
+            echo 'IyBpbmZvcHJvbXB0CgpB UUUgcmVwb3NpdG9yeS4K' | base64 --decode > repo/index.md
           fi
 
       - name: Publish to GitHub Pages
