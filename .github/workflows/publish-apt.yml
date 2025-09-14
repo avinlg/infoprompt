@@ -30,8 +30,7 @@ jobs:
           deb=$(ls packaging/infoprompt_*_all.deb | head -n1)
           echo "Checking $deb for /etc/profile.d/infoprompt.sh (executable)"
           # Find the line for the wrapper and check for x in permissions
-          dpkg-deb -c "$deb" | awk '{print $1,$6}' | grep 'profile.d/infoprompt.sh$' | grep -q 'x' 
-            || (dpkg-deb -c "$deb" && echo 'Wrapper not executable or missing' && exit 1)
+          dpkg-deb -c "$deb" | awk '{print $1,$6}' | grep 'profile.d/infoprompt.sh$' | grep -q 'x' || (dpkg-deb -c "$deb" && echo 'Wrapper not executable or missing' && exit 1)
 
       - name: Create repo and include package
         run: |
