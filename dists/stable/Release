@@ -2,9 +2,10 @@ Origin: infoprompt
 Label: infoprompt
 Suite: stable
 Codename: stable
-Architectures: all
+Architectures: amd64 all
 Components: main
+Date: Sun, 14 Sep 2025 12:51:45 +0000
 Description: infoprompt apt repository
 SHA256:
- c58906fcf80c22b6413686611c52a7bd1c621a3f1da93e130f29771234f4537e 471 main/binary-all/Packages
- 83d3c8907e9ab1bc2e21399e7fbc4941d83ebf80620a6e27dc6ff90747214aab 368 main/binary-all/Packages.gz
+ 24b272a067f969b63035c22ba1737d7e5fddeab5cdc2db6a3c24ff4d69306751 471 main/binary-all/Packages
+ e7a4847fe1e7ec392be7bd12dc42331098d5b635270d1b86b0dc06ad0309452c 365 main/binary-all/Packages.gz
