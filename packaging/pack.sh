@@ -178,16 +178,18 @@ user=${SUDO_USER:-$(logname 2>/dev/null || echo root)}
 if [ "${DEBIAN_FRONTEND:-}" = "noninteractive" ]; then
 	exit 0
 fi
-if [ "${ASSUME_YES:-0}" = "1" ]; then
-	/usr/bin/infoprompt -u "$user" -y enable || true
-	logger -t infoprompt "postinst: auto-enabled for $user"
-	exit 0
-fi
 echo
-printf "Enable infoprompt for user '%s'? [Y/n] " "$user"
-read ans || true
+printf "Enable infoprompt for user '%s'? [Y/n] (auto-yes in 10s) " "$user"
+ans=""
+if read -t 10 ans; then
+	:
+else
+	echo
+	echo "No answer within 10s, assuming yes."
+	ans=Y
+fi
 case "${ans:-Y}" in
-	[Yy]*) /usr/bin/infoprompt -u "$user" enable || true ;;
+	[Yy]*) /usr/bin/infoprompt -u "$user" -y enable || true ;;
 	*) echo "Skipping per-user enable." ;;
 esac
 EOF
